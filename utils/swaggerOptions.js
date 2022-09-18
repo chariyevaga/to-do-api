@@ -19,8 +19,8 @@ module.exports = {
             default: 'http',
           },
           host: {
-            enum: ['timar.com.tm', '172.10.18.3', 'localhost'],
-            default: 'localhost',
+            enum: ['95.85.116.10', '172.10.18.3', 'localhost'],
+            default: '95.85.116.10',
           },
           port: {
             default: '3003',
