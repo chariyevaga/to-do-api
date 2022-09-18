@@ -12,13 +12,16 @@ exportObject.register = async (req, res, next) => {
   }
 
   const checkUsernameUsed = await models.User.findOne({ where: { username } });
+  const confilctProperites = [];
   if (checkUsernameUsed) {
-    res.status(409).json({ status: 'conflict', conflictProperti: 'username', message: 'username alredy used' });
-    return;
+    confilctProperites.push('username');
   }
   const checkEmailUsed = await models.User.findOne({ where: { email } });
   if (checkEmailUsed) {
-    res.status(409).json({ status: 'conflict', conflictProperti: 'email', message: 'email address alredy used' });
+    confilctProperites.push('email');
+  }
+  if (confilctProperites.length) {
+    res.status(409).json({ status: 'confilct', conflictProperties });
     return;
   }
 
