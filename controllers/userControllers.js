@@ -6,6 +6,7 @@ const exportObject = {};
 
 exportObject.register = async (req, res, next) => {
   const { username, password, email } = req.body;
+  console.log(req.body);
   if (!username || !password || !email) {
     next(new AppError('username, password, and email properties are require', 400));
     return;
@@ -21,7 +22,7 @@ exportObject.register = async (req, res, next) => {
     confilctProperites.push('email');
   }
   if (confilctProperites.length) {
-    res.status(409).json({ status: 'confilct', conflictProperties });
+    res.status(409).json({ status: 'confilct', confilctProperites });
     return;
   }
 
