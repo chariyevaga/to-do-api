@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const models = require('../db/models');
 const AppError = require('../utils/appError');
 const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
+const { request } = require('express');
 const exportObject = {};
 
 exportObject.register = async (req, res, next) => {
@@ -41,7 +43,33 @@ exportObject.register = async (req, res, next) => {
 };
 
 exportObject.login = async (req, res, next) => {
-  res.json({ ok: 'ok' });
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.status(400).json({ status: 'fail', message: 'Username and password are required' });
+    return;
+  }
+
+  const user = await models.User.findOne({
+    where: {
+      [Op.or]: [{ username: { [Op.iLike]: username } }, { email: { [Op.iLike]: username } }],
+    },
+  });
+
+  if (!user) {
+    res.status(404).json({ status: 'fail', message: 'User not found' });
+    return;
+  }
+  const valid = await bcrypt.compare(password, user.password);
+
+  if (!valid) {
+    res.status(404).json({ status: 'fail', message: 'Wrong password' });
+    return;
+  }
+  const payload = { id: user.id };
+  const token = await jwt.sign(payload, process.env?.CLIENT_JWT_KEY, {
+    expiresIn: '3d',
+  });
+  res.json({ token });
 };
 
 module.exports = exportObject;
