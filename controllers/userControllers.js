@@ -72,4 +72,20 @@ exportObject.login = async (req, res, next) => {
   res.json({ token });
 };
 
+exportObject.tokenChecker = async (req, res, next) => {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    const token = req.headers.authorization.split(' ')[1];
+    try {
+      const jt = await jwt.verify(token, process.env?.CLIENT_JWT_KEY);
+      req._userId = jt.id;
+      next();
+      return;
+    } catch (error) {
+      res.status(401).json({ status: 'failed', message: 'Unauthorized' });
+      return;
+    }
+  }
+  res.status(401).json({ status: 'failed', message: 'Unauthorized' });
+};
+
 module.exports = exportObject;

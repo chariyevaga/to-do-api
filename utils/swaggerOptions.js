@@ -31,11 +31,11 @@ module.exports = {
 
     components: {
       securitySchemes: {
-        client: {
+        user: {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
-          description: "All client api's user this tokken",
+          description: "All user api's user this tokken",
         },
       },
       parameters: {

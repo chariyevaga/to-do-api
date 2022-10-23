@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = express.Router();
 
-const userControllers = require('../controllers/userControllers');
+const controllers = require('../controllers/userControllers');
 
 /**
  * @swagger
@@ -60,7 +60,7 @@ const userControllers = require('../controllers/userControllers');
  *              type: string
  *              enum: [username, email]
  */
-routes.post('/register', userControllers.register);
+routes.post('/register', controllers.register);
 
 /**
  * @swagger
@@ -97,6 +97,6 @@ routes.post('/register', userControllers.register);
  *              500:
  *                  description: Unexpected error in server side
  */
-routes.post('/login', userControllers.login);
+routes.post('/login', controllers.login);
 
 module.exports = routes;

@@ -19,7 +19,10 @@ app.use(cors({ credentials: true, origin: '*' }));
 
 // Routes
 const userRoutes = require('./routes/userRoutes');
+const listRoutes = require('./routes/listRoutes');
+
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/lists', listRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json({
