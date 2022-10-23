@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const models = require('../db/models');
 const AppError = require('../utils/appError');
 const jwt = require('jsonwebtoken');
-const { Op } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const { request } = require('express');
 const exportObject = {};
 
@@ -53,8 +53,15 @@ exportObject.updateList = async (req, res, next) => {
 };
 
 exportObject.getLists = async (req, res, next) => {
-  models
-    .findAll({ where: { userId: req._userId }, attributes: [['uuid', 'id'], 'name'] })
+  models.List.findAll({
+    where: { userId: req._userId },
+    attributes: [
+      ['uuid', 'id'],
+      'name',
+      [Sequelize.literal('0'), 'completedTaskCount'],
+      [Sequelize.literal('0'), 'taskCount'],
+    ],
+  })
     .then((lists) => {
       res.json(lists);
     })

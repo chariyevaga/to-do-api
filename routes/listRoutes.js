@@ -84,7 +84,7 @@ routes.post('/', tokenChecker, controllers.createNewList);
  *                                      type: string
  *                                      example: List name changed
  *              400:
- *                  description: Bad request. name is required
+ *                  description: Bad request. new name and id are required
  *              401:
  *                  $ref: '#/components/responses/UnauthorizedError'
  *              404:
@@ -98,39 +98,30 @@ routes.put('/:id', tokenChecker, controllers.updateList);
 /**
  * @swagger
  * paths:
- *  /v1/lists/{id}:
+ *  /v1/lists:
  *      get:
  *          tags: [Lists]
  *          summary: Update list name
  *          security:
  *              - user: []
- *          parameters:
- *              - in: paths
- *                name: id
- *                type: string
- *                required: true
- *          requestBody:
- *              content:
- *                  application/json:
- *                      schema:
- *                          type: object
- *                          properties:
- *                              name:
- *                                  type: string
  *          responses:
  *              200:
  *                  description: Registered. Save token
  *                  content:
  *                      application/json:
  *                          schema:
- *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      example: success
- *                                  message:
- *                                      type: string
- *                                      example: List name changed
+ *                              type: array
+ *                              items:
+ *                                  type: object
+ *                                  properties:
+ *                                      id:
+ *                                          type: string
+ *                                      name:
+ *                                          type: string
+ *                                      completedTaskCount:
+ *                                          type: integer
+ *                                      taskCount:
+ *                                          type: integer
  *              400:
  *                  description: Bad request. name is required
  *              401:
@@ -141,6 +132,6 @@ routes.put('/:id', tokenChecker, controllers.updateList);
  *                  description: Unexpected error in server side
  *
  */
-routes.get('/:id', tokenChecker, controllers.updateList);
+routes.get('/', tokenChecker, controllers.getLists);
 
 module.exports = routes;
