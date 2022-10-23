@@ -69,4 +69,27 @@ exportObject.getLists = async (req, res, next) => {
       next(new AppError(err, 500));
     });
 };
+
+exportObject.deleteList = async (req, res, next) => {
+  const { id } = req.params;
+  if (!id) {
+    next(new AppError('id is require', 400));
+    return;
+  }
+
+  const list = await models.List.findOne({ uuid: id, userId: req._userId });
+  if (!list) {
+    next(new AppError('List not found', 404));
+    return;
+  }
+
+  list
+    .destroy()
+    .then(() => {
+      res.json({ status: 'success', message: 'List deleted' });
+    })
+    .catch((err) => {
+      next(new AppError(err, 500));
+    });
+};
 module.exports = exportObject;

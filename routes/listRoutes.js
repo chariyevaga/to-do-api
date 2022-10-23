@@ -101,7 +101,7 @@ routes.put('/:id', tokenChecker, controllers.updateList);
  *  /v1/lists:
  *      get:
  *          tags: [Lists]
- *          summary: Update list name
+ *          summary: Get lists
  *          security:
  *              - user: []
  *          responses:
@@ -133,5 +133,45 @@ routes.put('/:id', tokenChecker, controllers.updateList);
  *
  */
 routes.get('/', tokenChecker, controllers.getLists);
+
+/**
+ * @swagger
+ * paths:
+ *  /v1/lists/{id}:
+ *      delete:
+ *          tags: [Lists]
+ *          summary: Delete List
+ *          security:
+ *              - user: []
+ *          parameters:
+ *              - in: paths
+ *                name: id
+ *                type: string
+ *                required: true
+ *          responses:
+ *              200:
+ *                  description: Registered. Save token
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      example: success
+ *                                  message:
+ *                                      type: string
+ *                                      example: List name changed
+ *              400:
+ *                  description: Bad request. id is required
+ *              401:
+ *                  $ref: '#/components/responses/UnauthorizedError'
+ *              404:
+ *                  description: You don't have a list by your sender id
+ *              500:
+ *                  description: Unexpected error in server side
+ *
+ */
+routes.delete('/:id', tokenChecker, controllers.deleteList);
 
 module.exports = routes;
