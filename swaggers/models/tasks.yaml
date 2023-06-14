@@ -1,0 +1,27 @@
+components:
+  schemas:
+    Task:
+      type: object
+      required:
+        - text
+        - completed
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        text:
+          type: string
+        completed:
+          type: boolean
+        user:
+          type: object
+          $ref: '#components/schemas/User'
+        list:
+          type: object
+          $ref: '#components/schemas/List'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

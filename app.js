@@ -7,7 +7,7 @@ const app = express();
 const errorHandling = require('./utils/errorHandler');
 
 // Docs
-const swaggerOptions = require('./utils/swaggerOptions');
+const swaggerOptions = require('./swaggers/index.js');
 const specs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
@@ -20,9 +20,11 @@ app.use(cors({ credentials: true, origin: '*' }));
 // Routes
 const userRoutes = require('./routes/userRoutes');
 const listRoutes = require('./routes/listRoutes');
+const taskRoutes = require('./routes/taskRoutes');
 
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/lists', listRoutes);
+app.use('/api/v1/tasks', taskRoutes);
 
 app.all('*', (req, res) => {
   res.status(404).json({

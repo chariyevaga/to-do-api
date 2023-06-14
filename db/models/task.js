@@ -1,35 +1,42 @@
 'use strict';
 const { Model, Sequelize } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class List extends Model {
+  class Task extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User }) {
+    static associate({ User, List }) {
       // define association here
       User.hasMany(this, { foreignKey: 'userId' });
+      List.hasMany(this, { foreignKey: 'listId' });
+      this.belongsTo(List, { foreignKey: 'listId' });
     }
     toJSON() {
       return {
         ...this.get(),
         id: undefined,
         userId: undefined,
+        listId: undefined,
       };
     }
   }
-  List.init(
+  Task.init(
     {
       uuid: { type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, unique: true },
-      name: DataTypes.STRING,
+      text: DataTypes.STRING,
+      completed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,
-      modelName: 'List',
-      tableName: 'lists',
+      modelName: 'Task',
+      tableName: 'tasks',
       underscored: true,
     }
   );
-  return List;
+  return Task;
 };

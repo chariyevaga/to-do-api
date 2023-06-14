@@ -8,7 +8,7 @@ lerna-debug.log*
 
 #config folder
 config/*
-
+!*.gitkeep
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

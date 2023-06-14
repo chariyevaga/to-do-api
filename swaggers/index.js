@@ -10,24 +10,6 @@ module.exports = {
         email: 'agamyrat.chariyev@gmail.com',
       },
     },
-    servers: [
-      {
-        url: '{protocol}://{host}:{port}/api/',
-        variables: {
-          protocol: {
-            enum: ['http', 'https'],
-            default: 'http',
-          },
-          host: {
-            enum: ['95.85.116.10', '172.10.18.3', 'localhost'],
-            default: '95.85.116.10',
-          },
-          port: {
-            default: '3003',
-          },
-        },
-      },
-    ],
 
     components: {
       securitySchemes: {
@@ -143,5 +125,5 @@ module.exports = {
       },
     },
   },
-  apis: [`${__dirname}/../routes/*.js`],
+  apis: [`${__dirname}/routes/*.yaml`, `${__dirname}/models/*.yaml`],
 };

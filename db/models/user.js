@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       List.belongsTo(this, { foreignKey: 'userId' });
     }
+    toJSON() {
+      return {
+        ...this.get(),
+        id: undefined,
+      };
+    }
   }
   User.init(
     {
@@ -35,6 +41,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      tableName: 'users',
+      underscored: true,
     }
   );
   return User;
