@@ -84,7 +84,7 @@ paths:
       security:
         - user: []
       parameters:
-        - in: paths
+        - in: path
           name: uuid
           schema:
             type: string
@@ -130,7 +130,7 @@ paths:
       security:
         - user: []
       parameters:
-        - in: paths
+        - in: path
           name: uuid
           schema:
             type: string

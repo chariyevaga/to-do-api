@@ -75,7 +75,7 @@ exportObject.deleteTask = async (req, res, next) => {
     return;
   }
 
-  const task = await models.Task.findOne({ uuid, userId: req._userId });
+  const task = await models.Task.findOne({ where: { uuid, userId: req._userId } });
   if (!task) {
     next(new AppError('Task not found', 404));
     return;

@@ -54,7 +54,7 @@ exportObject.updateList = async (req, res, next) => {
     return;
   }
 
-  const list = await models.List.findOne({ uuid, userId: req._userId });
+  const list = await models.List.findOne({ where: { uuid, userId: req._userId } });
   if (!list) {
     next(new AppError('List not found', 404));
     return;
@@ -78,7 +78,7 @@ exportObject.deleteList = async (req, res, next) => {
     return;
   }
 
-  const list = await models.List.findOne({ uuid, userId: req._userId });
+  const list = await models.List.findOne({ where: { uuid, userId: req._userId } });
   if (!list) {
     next(new AppError('List not found', 404));
     return;
